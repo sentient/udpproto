@@ -26,7 +26,10 @@ func main() {
 	}
 	defer conn.Close()
 
-	col := &collector{}
+	col := &collector{
+		name: "testclient",
+		pid:  os.Getpid(),
+	}
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
@@ -40,11 +43,12 @@ func main() {
 			col.sendMetrics(conn)
 		}
 	}
-
 }
 
 type collector struct {
 	lastNumGC uint32
+	name      string
+	pid       int
 }
 
 func (c *collector) sendMetrics(conn *net.UDPConn) {
@@ -53,6 +57,8 @@ func (c *collector) sendMetrics(conn *net.UDPConn) {
 	runtime.ReadMemStats(ms)
 
 	g := &protobuf.GolangHeap{
+		ProcessName:          c.name,
+		ProcessId:            uint32(c.pid),
 		TimestampNano:        time.Now().UnixNano(),
 		AllocationsMallocs:   ms.Mallocs,
 		AllocationsFrees:     ms.Frees,
@@ -61,11 +67,10 @@ func (c *collector) sendMetrics(conn *net.UDPConn) {
 		AllocationsAllocated: ms.HeapAlloc,
 		AllocationsIdle:      ms.HeapIdle,
 		AllocationsActive:    ms.HeapInuse,
-
-		SystemTotal:    ms.Sys,
-		SystemObtained: ms.HeapSys,
-		SystemStack:    ms.StackSys,
-		SystemReleased: ms.HeapReleased,
+		SystemTotal:          ms.Sys,
+		SystemObtained:       ms.HeapSys,
+		SystemStack:          ms.StackSys,
+		SystemReleased:       ms.HeapReleased,
 	}
 
 	// garbage collector summary

@@ -23,6 +23,6 @@ message GolangHeap {
     uint64 system_total = 19 ;
     int64 timestamp_nano = 20;        
     string process_name = 21;
-    uint32 process_PID = 22;
+    uint32 process_id = 22;
     
 }

@@ -1,0 +1,758 @@
+
+////
+This file is generated! See _meta/fields.yml and scripts/generate_field_docs.py
+////
+
+[[exported-fields]]
+= Exported fields
+
+[partintro]
+
+--
+This document describes the fields that are exported by Metricbeat. They are
+grouped in the following categories:
+
+* <<exported-fields-beat>>
+* <<exported-fields-cloud>>
+* <<exported-fields-common>>
+* <<exported-fields-docker-processor>>
+* <<exported-fields-host-processor>>
+* <<exported-fields-kubernetes-processor>>
+* <<exported-fields-udpproto>>
+
+--
+[[exported-fields-beat]]
+== Beat fields
+
+Contains common beat fields available in all event types.
+
+
+
+*`beat.name`*::
++
+--
+The name of the Beat sending the log messages. If the Beat name is set in the configuration file, then that value is used. If it is not set, the hostname is used. To set the Beat name, use the `name` option in the configuration file.
+
+
+--
+
+*`beat.hostname`*::
++
+--
+The hostname as returned by the operating system on which the Beat is running.
+
+
+--
+
+*`beat.timezone`*::
++
+--
+The timezone as returned by the operating system on which the Beat is running.
+
+
+--
+
+*`beat.version`*::
++
+--
+The version of the beat that generated this event.
+
+
+--
+
+*`@timestamp`*::
++
+--
+type: date
+
+example: August 26th 2016, 12:35:53.332
+
+format: date
+
+required: True
+
+The timestamp when the event log record was generated.
+
+
+--
+
+*`tags`*::
++
+--
+Arbitrary tags that can be set per Beat and per transaction type.
+
+
+--
+
+*`fields`*::
++
+--
+type: object
+
+Contains user configurable fields.
+
+
+--
+
+[float]
+== error fields
+
+Error fields containing additional info in case of errors.
+
+
+
+*`error.message`*::
++
+--
+type: text
+
+Error message.
+
+
+--
+
+*`error.code`*::
++
+--
+type: long
+
+Error code.
+
+
+--
+
+*`error.type`*::
++
+--
+type: keyword
+
+Error type.
+
+
+--
+
+[[exported-fields-cloud]]
+== Cloud provider metadata fields
+
+Metadata from cloud providers added by the add_cloud_metadata processor.
+
+
+
+*`meta.cloud.provider`*::
++
+--
+example: ec2
+
+Name of the cloud provider. Possible values are ec2, gce, or digitalocean.
+
+
+--
+
+*`meta.cloud.instance_id`*::
++
+--
+Instance ID of the host machine.
+
+
+--
+
+*`meta.cloud.instance_name`*::
++
+--
+Instance name of the host machine.
+
+
+--
+
+*`meta.cloud.machine_type`*::
++
+--
+example: t2.medium
+
+Machine type of the host machine.
+
+
+--
+
+*`meta.cloud.availability_zone`*::
++
+--
+example: us-east-1c
+
+Availability zone in which this host is running.
+
+
+--
+
+*`meta.cloud.project_id`*::
++
+--
+example: project-x
+
+Name of the project in Google Cloud.
+
+
+--
+
+*`meta.cloud.region`*::
++
+--
+Region in which this host is running.
+
+
+--
+
+[[exported-fields-common]]
+== Common fields
+
+Contains common fields available in all event types.
+
+
+
+*`metricset.module`*::
++
+--
+The name of the module that generated the event.
+
+
+--
+
+*`metricset.name`*::
++
+--
+The name of the metricset that generated the event.
+
+
+--
+
+*`metricset.host`*::
++
+--
+Hostname of the machine from which the metricset was collected. This field may not be present when the data was collected locally.
+
+
+--
+
+*`metricset.rtt`*::
++
+--
+type: long
+
+required: True
+
+Event round trip time in microseconds.
+
+
+--
+
+*`metricset.namespace`*::
++
+--
+type: keyword
+
+Namespace of dynamic metricsets.
+
+
+--
+
+*`type`*::
++
+--
+example: metricsets
+
+required: True
+
+The document type. Always set to "doc".
+
+
+--
+
+[[exported-fields-docker-processor]]
+== Docker fields
+
+Docker stats collected from Docker.
+
+
+
+
+*`docker.container.id`*::
++
+--
+type: keyword
+
+Unique container id.
+
+
+--
+
+*`docker.container.image`*::
++
+--
+type: keyword
+
+Name of the image the container was built on.
+
+
+--
+
+*`docker.container.name`*::
++
+--
+type: keyword
+
+Container name.
+
+
+--
+
+*`docker.container.labels`*::
++
+--
+type: object
+
+Image labels.
+
+
+--
+
+[[exported-fields-host-processor]]
+== Host fields
+
+Info collected for the host machine.
+
+
+
+
+*`host.name`*::
++
+--
+type: keyword
+
+Hostname.
+
+
+--
+
+*`host.id`*::
++
+--
+type: keyword
+
+Unique host id.
+
+
+--
+
+*`host.architecture`*::
++
+--
+type: keyword
+
+Host architecture (e.g. x86_64, arm, ppc, mips).
+
+
+--
+
+*`host.os.platform`*::
++
+--
+type: keyword
+
+OS platform (e.g. centos, ubuntu, windows).
+
+
+--
+
+*`host.os.version`*::
++
+--
+type: keyword
+
+OS version.
+
+
+--
+
+*`host.os.family`*::
++
+--
+type: keyword
+
+OS family (e.g. redhat, debian, freebsd, windows).
+
+
+--
+
+[[exported-fields-kubernetes-processor]]
+== Kubernetes fields
+
+Kubernetes metadata added by the kubernetes processor
+
+
+
+
+*`kubernetes.pod.name`*::
++
+--
+type: keyword
+
+Kubernetes pod name
+
+
+--
+
+*`kubernetes.namespace`*::
++
+--
+type: keyword
+
+Kubernetes namespace
+
+
+--
+
+*`kubernetes.node.name`*::
++
+--
+type: keyword
+
+Kubernetes node name
+
+
+--
+
+*`kubernetes.labels`*::
++
+--
+type: object
+
+Kubernetes labels map
+
+
+--
+
+*`kubernetes.annotations`*::
++
+--
+type: object
+
+Kubernetes annotations map
+
+
+--
+
+*`kubernetes.container.name`*::
++
+--
+type: keyword
+
+Kubernetes container name
+
+
+--
+
+*`kubernetes.container.image`*::
++
+--
+type: keyword
+
+Kubernetes container image
+
+
+--
+
+[[exported-fields-udpproto]]
+== udpproto fields
+
+experimental[]
+udpproto module
+
+
+
+[float]
+== udpproto fields
+
+
+
+
+[float]
+== golang.heap fields
+
+golang.heap
+
+
+
+*`udpproto.golang.heap.cmdline`*::
++
+--
+type: keyword
+
+The cmdline of this golang program start with.
+
+
+--
+
+[float]
+== gc fields
+
+Garbage collector summary.
+
+
+
+[float]
+== total_pause fields
+
+Total GC pause duration over lifetime of process.
+
+
+
+*`udpproto.golang.heap.gc.total_pause.ns`*::
++
+--
+type: long
+
+Duration in Ns.
+
+
+--
+
+*`udpproto.golang.heap.gc.total_count`*::
++
+--
+type: long
+
+Total number of GC was happened.
+
+
+--
+
+*`udpproto.golang.heap.gc.next_gc_limit`*::
++
+--
+type: long
+
+format: bytes
+
+Next collection will happen when HeapAlloc > this amount.
+
+
+--
+
+*`udpproto.golang.heap.gc.cpu_fraction`*::
++
+--
+type: long
+
+Fraction of CPU time used by GC.
+
+
+--
+
+[float]
+== pause fields
+
+Last GC pause durations during the monitoring period.
+
+
+
+*`udpproto.golang.heap.gc.pause.count`*::
++
+--
+type: long
+
+Count of GC pause duration during this collect period.
+
+
+--
+
+[float]
+== sum fields
+
+Total GC pause duration during this collect period.
+
+
+
+*`udpproto.golang.heap.gc.pause.sum.ns`*::
++
+--
+type: long
+
+Duration in Ns.
+
+
+--
+
+[float]
+== max fields
+
+Max GC pause duration during this collect period.
+
+
+
+*`udpproto.golang.heap.gc.pause.max.ns`*::
++
+--
+type: long
+
+Duration in Ns.
+
+
+--
+
+[float]
+== avg fields
+
+Average GC pause duration during this collect period.
+
+
+
+*`udpproto.golang.heap.gc.pause.avg.ns`*::
++
+--
+type: long
+
+Duration in Ns.
+
+
+--
+
+[float]
+== system fields
+
+Heap summary,which bytes was obtained from system.
+
+
+
+*`udpproto.golang.heap.system.total`*::
++
+--
+type: long
+
+format: bytes
+
+Total bytes obtained from system (sum of XxxSys below).
+
+
+--
+
+*`udpproto.golang.heap.system.obtained`*::
++
+--
+type: long
+
+format: bytes
+
+Via HeapSys, bytes obtained from system. heap_sys = heap_idle + heap_inuse.
+
+
+--
+
+*`udpproto.golang.heap.system.stack`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes used by stack allocator, and these bytes was obtained from system.
+
+
+--
+
+*`udpproto.golang.heap.system.released`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes released to the OS.
+
+
+--
+
+[float]
+== allocations fields
+
+Heap allocations summary.
+
+
+
+*`udpproto.golang.heap.allocations.mallocs`*::
++
+--
+type: long
+
+Number of mallocs.
+
+
+--
+
+*`udpproto.golang.heap.allocations.frees`*::
++
+--
+type: long
+
+Number of frees.
+
+
+--
+
+*`udpproto.golang.heap.allocations.objects`*::
++
+--
+type: long
+
+Total number of allocated objects.
+
+
+--
+
+*`udpproto.golang.heap.allocations.total`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes allocated (even if freed) throughout the lifetime.
+
+
+--
+
+*`udpproto.golang.heap.allocations.allocated`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes allocated and not yet freed (same as Alloc above).
+
+
+--
+
+*`udpproto.golang.heap.allocations.idle`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes in idle spans.
+
+
+--
+
+*`udpproto.golang.heap.allocations.active`*::
++
+--
+type: long
+
+format: bytes
+
+Bytes in non-idle span.
+
+
+--
+

@@ -1,0 +1,6 @@
+- module: udpproto
+  metricsets: ["heap"]
+  enabled: false
+  period: 10s
+  hosts: ["localhost"]
+

@@ -1,0 +1,39 @@
+////
+This file is generated! See scripts/docs_collector.py
+////
+
+[[metricbeat-module-udpproto]]
+== udpproto module
+
+experimental[]
+
+This is the udpproto module.
+
+
+
+[float]
+=== Example configuration
+
+The udpproto module supports the standard configuration options that are described
+in <<configuration-metricbeat>>. Here is an example configuration:
+
+[source,yaml]
+----
+udpproto.modules:
+- module: udpproto
+  metricsets: ["heap"]
+  enabled: false
+  period: 10s
+  hosts: ["localhost"]
+
+----
+
+[float]
+=== Metricsets
+
+The following metricsets are available:
+
+* <<metricbeat-metricset-udpproto-heap,heap>>
+
+include::udpproto/heap.asciidoc[]
+

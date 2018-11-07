@@ -1,0 +1,7 @@
+# Directories
+build
+.idea/
+newyu-*
+testclient/testclient
+udpproto
+vendor/*

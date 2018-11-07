@@ -1,0 +1,28 @@
+syntax= "proto3";
+package heap;
+
+message GolangHeap {
+    uint64 allocations_active = 1;
+    uint64 allocations_allocated = 2;
+    uint64 allocations_frees = 3;
+    uint64 allocations_idle = 4;
+    uint64 allocations_mallocs = 5;
+    uint64 allocations_objects = 6;
+    uint64 allocations_total = 7;
+    double gc_cpu_fraction = 8;
+    uint64 gc_next_gc_limit = 9;
+    uint64 gc_pause_avg_ns= 10;
+    uint64 gc_pause_count = 11;
+    uint64 gc_pause_max_ns= 12;
+    uint64 gc_pause_sum_ns = 13;
+    uint32 gc_total_count = 14;
+    uint64 gc_total_pause_ns = 15;
+    uint64 system_obtained = 16;
+    uint64 system_released = 17;
+    uint64 system_stack	= 18;
+    uint64 system_total = 19 ;
+    int64 timestamp_nano = 20;        
+    string process_name = 21;
+    uint32 process_PID = 22;
+    
+}

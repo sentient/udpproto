@@ -1,82 +1,61 @@
 # udpproto
 
 udpproto is a beat based on metricbeat which was generated with metricbeat/metricset generator.
+The beat provides an alternative to get golang heap metrics from a service to elasticsearch. 
+It does not fetch the data, but listens on a port to receive binary packages (in proto3 format) and pushes the data into ElasticSearch.
+It uses the same document format as the `golang` module so the dashbards can be re-used.
+
+    Note: metricbeats has a module `golang` that _fetches_ the heap metrics from a golang application by querying an http port.
 
 
-## Getting started
-
-To get started run the following command. This command should only be run once.
-
-```
-make setup
-```
-
-It will ask you for the module and metricset name. Insert the name accordingly.
-
-To compile your beat run `make`. Then you can run the following command to see the first output:
 
 ```
-udpproto -e -d "*"
+    Your application 
+    -> write udp message 
+    UdpProto server
+    -> udpproto receives message 
+    -> posts the golang heap data to ElasticSearch
+    ElasticSearch
+    -> use existing dashboard [Meticbeat Golang]
+    
 ```
 
-In case further modules are metricsets should be added, run:
+See the testclient as an example how your application could send the data.
 
-```
-make create-metricset
-```
+# The data
 
-After updates to the fields or config files, always run
-
-```
-make collect
-```
-
-This updates all fields and docs with the most recent changes.
-
-## Use vendoring
-
-We recommend to use vendoring for your beat. This means the dependencies are put into your beat folder. The beats team currently uses [govendor](https://github.com/kardianos/govendor) for vendoring.
-
-```
-govendor init
-govendor update +e
-```
-
-This will create a directory `vendor` inside your repository. To make sure all dependencies for the Makefile commands are loaded from the vendor directory, find the following line in your Makefile:
-
-```
-ES_BEATS=${GOPATH}/src/github.com/elastic/beats
-```
-
-Replace it with:
-```
-ES_BEATS=./vendor/github.com/elastic/beats
-```
+| proto field name 	                | elastic field 	                |
+|--------------	                    |-------------------	            |
+| timestamp_nano                 	| @timestamp 						|
+| process_name 	                    | system.process.name               |
+| process_id 	                    | system.process.id	                |
+| allocations_active 	            | golang.heap.allocations.active 	|
+| allocations_allocated         	| golang.heap.allocations.allocated |
+| allocations_frees             	| golang.heap.allocations.frees     |
+| allocations_idle              	| golang.heap.allocations.idle  	|
+| allocations_mallocs           	| golang.heap.allocations.mallocs  	|
+| allocations_objects           	| golang.heap.allocations.obects    |
+| allocations_total             	| golang.heap.allocations.total     |
+| gc_cpu_fraction               	| golang.heap.gc.cpu.fraction       |
+| gc_next_gc_limit              	| golang.heap.gc.next.gc_limit      |
+| gc_pause_avg_ns               	| golang.heap.gc.pause.avg_ns       |
+| gc_pause_count                	| golang.heap.gc.pause.count        |
+| gc_pause_max_ns               	| golang.heap.gc.pause.max_ns       |
+| gc_pause_sum_ns               	| golang.heap.gc.pause.sum_ns       |
+| gc_total_count                	| golang.heap.gc.total.count        |
+| gc_total_pause_ns             	| golang.heap.gc.total.pause_ns     |
+| system_obtained               	| golang.heap.system.obtaines       |
+| system_released               	| golang.heap.system.released       |
+| system_stack                  	| golang.heap.system.stack          |
+| system_total                  	| golang.heap.system.total          |
 
 
-## Versioning
+## Motivation for this beat
 
-We recommend to version your repository with git and make it available on Github so others can also use your project. The initialise the git repository and add the first commits, you can use the following commands:
+We did not want to open a port on our running services. This is the Hollywood approach: don't call us, we call you.
 
-```
-git init
-git add README.md CONTRIBUTING.md
-git commit -m "Initial commit"
-git add LICENSE
-git commit -m "Add the LICENSE"
-git add .gitignore
-git commit -m "Add git settings"
-git add .
-git reset -- .travis.yml
-git commit -m "Add udpproto"
-```
 
-## Packaging
+# Installation
 
-The beat frameworks provides tools to crosscompile and package your beat for different platforms. This requires [docker](https://www.docker.com/) and vendoring as described above. To build packages of your beat, run the following command:
+Something I have to figure out yet.... Ideally I like to have it part of just the metricbeat, but the udpproto service running in a seperate process. /etc/udpproto
 
-```
-make package
-```
-
-This will fetch and create all images required for the build process. The hole process to finish can take several minutes.

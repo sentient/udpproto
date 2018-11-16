@@ -28,7 +28,8 @@ See the testclient as an example how your application could send the data.
 |--------------	                    |-------------------	            |
 | timestamp_nano                 	| @timestamp 						|
 | process_name 	                    | system.process.name               |
-| process_id 	                    | system.process.id	                |
+| process_id 	                    | system.process.pid                |
+| process_cmdline                   | system.process.cmdline            |
 | allocations_active 	            | golang.heap.allocations.active 	|
 | allocations_allocated         	| golang.heap.allocations.allocated |
 | allocations_frees             	| golang.heap.allocations.frees     |

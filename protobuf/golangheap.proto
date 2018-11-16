@@ -24,5 +24,6 @@ message GolangHeap {
     int64 timestamp_nano = 20;        
     string process_name = 21;
     uint32 process_id = 22;
+    string process_cmdline = 23;
     
 }

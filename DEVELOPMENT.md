@@ -28,7 +28,15 @@ After updates to the fields or config files, always run
 make collect
 ```
 
+
 This updates all fields and docs with the most recent changes.
+
+
+Update changes to the protobuf layout with. You need `protoc` installed for this
+
+```
+make generate-proto
+```
 
 ## Use vendoring
 
